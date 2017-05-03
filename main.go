@@ -1,7 +1,13 @@
 package main
 
-import "net/http"
+import (
+	"flag"
+	"net/http"
+)
 
 func main() {
-	panic(http.ListenAndServe(":8080", http.FileServer(http.Dir("/usr/share/doc"))))
+	port := flag.String("p", "8080", "Port to host files on.")
+	dir := flag.String("d", "./", "Directory in which to root server.")
+	flag.Parse()
+	panic(http.ListenAndServe(":"+*port, http.FileServer(http.Dir(*dir))))
 }
